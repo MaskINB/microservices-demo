@@ -51,3 +51,21 @@ module "iam" {
     ManagedBy   = "terraform"
   }
 }
+
+#EKS to deploy the microservices platform. The EKS module is configured to use the VPC and IAM roles created in the previous modules, and it sets up a managed node group with specific instance types and capacity settings.
+
+module "eks" {
+  source = "./modules/eks"
+
+  cluster_name        = "induwara-eks-platform"
+  vpc_id              = module.vpc.vpc_id
+  private_subnet_ids  = module.vpc.private_subnet_ids
+  cluster_role_arn    = module.iam.cluster_role_arn
+  node_role_arn       = module.iam.node_role_arn
+
+  tags = {
+    Project     = "eks-microservices-platform"
+    Environment = "portfolio"
+    ManagedBy   = "terraform"
+  }
+}
