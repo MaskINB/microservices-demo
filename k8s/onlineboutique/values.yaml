@@ -1,0 +1,74 @@
+namespace: dev
+
+services:
+  frontend:
+    image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/frontend
+    tag: latest
+    port: 8080
+    protocol: http
+    replicas: 2
+  adservice:
+    image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/adservice
+    tag: latest
+    port: 9555
+    protocol: grpc
+    replicas: 1
+  cartservice:
+    image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/cartservice
+    tag: latest
+    port: 7070
+    protocol: grpc
+    replicas: 1
+  checkoutservice:
+    image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/checkoutservice
+    tag: latest
+    port: 5050
+    protocol: grpc
+    replicas: 1
+  currencyservice:
+    image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/currencyservice
+    tag: latest
+    port: 7000
+    protocol: grpc
+    replicas: 1
+  emailservice:
+    image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/emailservice
+    tag: latest
+    port: 8080
+    protocol: grpc
+    replicas: 1
+  paymentservice:
+    image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/paymentservice
+    tag: latest
+    port: 50051
+    protocol: grpc
+    replicas: 1
+  productcatalogservice:
+    image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/productcatalogservice
+    tag: latest
+    port: 3550
+    protocol: grpc
+    replicas: 1
+  recommendationservice:
+    image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/recommendationservice
+    tag: latest
+    port: 8080
+    protocol: grpc
+    replicas: 1
+  shippingservice:
+    image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/shippingservice
+    tag: latest
+    port: 50051
+    protocol: grpc
+    replicas: 1
+  shoppingassistantservice:
+    image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/shoppingassistantservice
+    tag: latest
+    port: 8080
+    protocol: http
+    replicas: 1
+  loadgenerator:
+    image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/loadgenerator
+    tag: latest
+    protocol: none
+    replicas: 1
