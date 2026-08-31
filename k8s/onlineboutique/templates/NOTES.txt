@@ -1,0 +1,5 @@
+Online Boutique Helm chart deployed to namespace: {{ .Values.namespace }}
+
+Run the following to check status:
+  kubectl get pods -n {{ .Values.namespace }}
+  kubectl get svc -n {{ .Values.namespace }}
