@@ -7,68 +7,113 @@ services:
     port: 8080
     protocol: http
     replicas: 2
+    env:
+      PORT: "8080"
+      DISABLE_PROFILER: "1"
+      SHOPPING_ASSISTANT_SERVICE_ADDR: "shoppingassistantservice:8080"
+      PRODUCT_CATALOG_SERVICE_ADDR: "productcatalogservice:3550"
+      CURRENCY_SERVICE_ADDR: "currencyservice:7000"
+      CART_SERVICE_ADDR: "cartservice:7070"
+      RECOMMENDATION_SERVICE_ADDR: "recommendationservice:8080"
+      SHIPPING_SERVICE_ADDR: "shippingservice:50051"
+      CHECKOUT_SERVICE_ADDR: "checkoutservice:5050"
+      AD_SERVICE_ADDR: "adservice:9555"
+      ENV_PLATFORM: "aws"
   adservice:
     image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/adservice
     tag: latest
     port: 9555
     protocol: grpc
     replicas: 1
+    env:
+      PORT: "9555"
   cartservice:
     image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/cartservice
     tag: latest
     port: 7070
     protocol: grpc
     replicas: 1
+    env:
+      PORT: "7070"
+      REDIS_ADDR: "redis-cart:6379"
   checkoutservice:
     image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/checkoutservice
     tag: latest
     port: 5050
     protocol: grpc
     replicas: 1
+    env:
+      PORT: "5050"
+      DISABLE_PROFILER: "1"
+      PRODUCT_CATALOG_SERVICE_ADDR: "productcatalogservice:3550"
+      SHIPPING_SERVICE_ADDR: "shippingservice:50051"
+      PAYMENT_SERVICE_ADDR: "paymentservice:50051"
+      EMAIL_SERVICE_ADDR: "emailservice:8080"
+      CURRENCY_SERVICE_ADDR: "currencyservice:7000"
+      CART_SERVICE_ADDR: "cartservice:7070"
   currencyservice:
     image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/currencyservice
     tag: latest
     port: 7000
     protocol: grpc
     replicas: 1
+    env:
+      PORT: "7000"
+      DISABLE_PROFILER: "1"
   emailservice:
     image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/emailservice
     tag: latest
     port: 8080
     protocol: grpc
     replicas: 1
+    env:
+      PORT: "8080"
   paymentservice:
     image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/paymentservice
     tag: latest
     port: 50051
     protocol: grpc
     replicas: 1
+    env:
+      PORT: "50051"
+      DISABLE_PROFILER: "1"
   productcatalogservice:
     image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/productcatalogservice
     tag: latest
     port: 3550
     protocol: grpc
     replicas: 1
+    env:
+      PORT: "3550"
   recommendationservice:
     image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/recommendationservice
     tag: latest
     port: 8080
     protocol: grpc
     replicas: 1
+    env:
+      PORT: "8080"
+      PRODUCT_CATALOG_SERVICE_ADDR: "productcatalogservice:3550"
   shippingservice:
     image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/shippingservice
     tag: latest
     port: 50051
     protocol: grpc
     replicas: 1
+    env:
+      PORT: "50051"
   shoppingassistantservice:
     image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/shoppingassistantservice
     tag: latest
     port: 8080
     protocol: http
-    replicas: 1
+    replicas: 0
+    env:
+      PORT: "8080"
   loadgenerator:
     image: 271033481922.dkr.ecr.ap-south-1.amazonaws.com/loadgenerator
     tag: latest
     protocol: none
     replicas: 1
+    env:
+      FRONTEND_ADDR: "frontend:8080"
