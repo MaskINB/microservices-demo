@@ -23,6 +23,13 @@ spec:
           ports:
             - containerPort: {{ $svc.port }}
           {{- end }}
+          {{- if $svc.env }}
+          env:
+            {{- range $key, $value := $svc.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          {{- end }}
           resources:
             requests:
               cpu: 100m
