@@ -69,3 +69,18 @@ module "eks" {
     ManagedBy   = "terraform"
   }
 }
+
+#ALB to manage ingress traffic for the microservices platform. The ALB module is configured to use the EKS cluster and its associated IAM roles, and it sets up an Ingress Controller with the necessary permissions to manage load balancing for the services deployed in the cluster.
+module "alb_controller_irsa" {
+  source = "./modules/alb-controller-irsa"
+
+  cluster_name       = "induwara-eks-platform"
+  oidc_provider_arn  = module.eks.oidc_provider_arn
+  oidc_issuer_url    = module.eks.cluster_oidc_issuer_url
+
+  tags = {
+    Project     = "eks-microservices-platform"
+    Environment = "portfolio"
+    ManagedBy   = "terraform"
+  }
+}
