@@ -14,7 +14,7 @@ module "vpc" {
   public_subnets  = var.public_subnet_cidrs
 
   enable_nat_gateway     = true
-  single_nat_gateway     = true   # your locked decision: 1 NAT GW, not 1-per-AZ
+  single_nat_gateway     = true # your locked decision: 1 NAT GW, not 1-per-AZ
   one_nat_gateway_per_az = false
 
   enable_dns_hostnames = true
