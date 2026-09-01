@@ -167,3 +167,14 @@ Find **Protocol Buffers Descriptions** at the [`./protos` directory](/protos).
 - [Google Cloud Next'18 London – Keynote](https://youtu.be/nIq2pkNcfEI?t=3071)
   showing Stackdriver Incident Response Management
 - [Microservices demo showcasing Go Micro](https://github.com/go-micro/demo)
+
+## Security Considerations
+
+This project underwent automated security scanning via `tfsec` in CI. Findings addressed:
+- **Control plane logging** — enabled (API, audit, authenticator, controller manager, scheduler logs to CloudWatch)
+- **VPC Flow Logs** — enabled for network traffic visibility
+
+Findings accepted as reasonable trade-offs for a portfolio project, with reasoning:
+- **Public EKS API endpoint** — enabled to allow CI/CD and local access without a bastion host or VPN. In a production environment, this would be restricted to a private endpoint or specific CIDR ranges.
+- **Unrestricted node egress** — inherited from the standard EKS Terraform module's defaults; nodes need broad outbound access to pull container images and reach AWS APIs.
+- **ECR repositories use AWS-managed encryption keys** rather than customer-managed KMS keys — acceptable for this non-regulated demo workload; a production system handling sensitive data would use customer-managed keys for audit and rotation control.
