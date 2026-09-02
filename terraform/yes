@@ -1,0 +1,32 @@
+{
+    "FlowLogs": [
+        {
+            "CreationTime": "2026-09-01T12:13:50.823000+00:00",
+            "DeliverLogsPermissionArn": "arn:aws:iam::271033481922:role/vpc-flow-log-role-20260901121348140000000001",
+            "DeliverLogsStatus": "SUCCESS",
+            "FlowLogId": "fl-0e38a5cd66444a14a",
+            "FlowLogStatus": "ACTIVE",
+            "LogGroupName": "/aws/vpc-flow-log/vpc-0580632cac3a30cf2",
+            "ResourceId": "vpc-0580632cac3a30cf2",
+            "TrafficType": "ALL",
+            "LogDestinationType": "cloud-watch-logs",
+            "LogDestination": "arn:aws:logs:ap-south-1:271033481922:log-group:/aws/vpc-flow-log/vpc-0580632cac3a30cf2",
+            "LogFormat": "${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}",
+            "Tags": [
+                {
+                    "Key": "Project",
+                    "Value": "eks-microservices-platform"
+                },
+                {
+                    "Key": "Environment",
+                    "Value": "portfolio"
+                },
+                {
+                    "Key": "ManagedBy",
+                    "Value": "terraform"
+                }
+            ],
+            "MaxAggregationInterval": 60
+        }
+    ]
+}

@@ -57,11 +57,11 @@ module "iam" {
 module "eks" {
   source = "./modules/eks"
 
-  cluster_name        = "induwara-eks-platform"
-  vpc_id              = module.vpc.vpc_id
-  private_subnet_ids  = module.vpc.private_subnet_ids
-  cluster_role_arn    = module.iam.cluster_role_arn
-  node_role_arn       = module.iam.node_role_arn
+  cluster_name       = "induwara-eks-platform"
+  vpc_id             = module.vpc.vpc_id
+  private_subnet_ids = module.vpc.private_subnet_ids
+  cluster_role_arn   = module.iam.cluster_role_arn
+  node_role_arn      = module.iam.node_role_arn
 
   tags = {
     Project     = "eks-microservices-platform"
@@ -74,9 +74,9 @@ module "eks" {
 module "alb_controller_irsa" {
   source = "./modules/alb-controller-irsa"
 
-  cluster_name       = "induwara-eks-platform"
-  oidc_provider_arn  = module.eks.oidc_provider_arn
-  oidc_issuer_url    = module.eks.cluster_oidc_issuer_url
+  cluster_name      = "induwara-eks-platform"
+  oidc_provider_arn = module.eks.oidc_provider_arn
+  oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
 
   tags = {
     Project     = "eks-microservices-platform"

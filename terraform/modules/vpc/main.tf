@@ -14,11 +14,16 @@ module "vpc" {
   public_subnets  = var.public_subnet_cidrs
 
   enable_nat_gateway     = true
-  single_nat_gateway     = true   # your locked decision: 1 NAT GW, not 1-per-AZ
+  single_nat_gateway     = true # your locked decision: 1 NAT GW, not 1-per-AZ
   one_nat_gateway_per_az = false
 
   enable_dns_hostnames = true
   enable_dns_support   = true
+
+  enable_flow_log                      = true
+  create_flow_log_cloudwatch_log_group = true
+  create_flow_log_cloudwatch_iam_role  = true
+  flow_log_max_aggregation_interval    = 60
 
   # Required tags so the EKS cluster (built in Step 2.5) can auto-discover these subnets
   public_subnet_tags = {

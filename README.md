@@ -167,3 +167,29 @@ Find **Protocol Buffers Descriptions** at the [`./protos` directory](/protos).
 - [Google Cloud Next'18 London – Keynote](https://youtu.be/nIq2pkNcfEI?t=3071)
   showing Stackdriver Incident Response Management
 - [Microservices demo showcasing Go Micro](https://github.com/go-micro/demo)
+
+## Security Considerations
+
+This project underwent automated security scanning via `tfsec` in CI. Findings addressed:
+- **Control plane logging** — enabled (API, audit, authenticator, controller manager, scheduler logs to CloudWatch)
+- **VPC Flow Logs** — enabled for network traffic visibility
+
+Findings accepted as reasonable trade-offs for a portfolio project, with reasoning:
+- **Public EKS API endpoint** — enabled to allow CI/CD and local access without a bastion host or VPN. In a production environment, this would be restricted to a private endpoint or specific CIDR ranges.
+- **Unrestricted node egress** — inherited from the standard EKS Terraform module's defaults; nodes need broad outbound access to pull container images and reach AWS APIs.
+- **ECR repositories use AWS-managed encryption keys** rather than customer-managed KMS keys — acceptable for this non-regulated demo workload; a production system handling sensitive data would use customer-managed keys for audit and rotation control.
+
+## Security Considerations
+
+This project underwent automated security scanning via `tfsec` in CI.
+
+**Addressed:**
+- Control plane logging enabled (API, audit, authenticator, controller manager, scheduler → CloudWatch)
+
+**Known false positive:**
+- `tfsec` flags "VPC Flow Logs not enabled" (rule `aws-ec2-require-vpc-flow-logs-for-all-vpcs`). Verified this is a false positive specific to the `terraform-aws-modules/vpc/aws` module — flow logs ARE enabled and active, confirmed via `aws ec2 describe-flow-logs` (FlowLogId `fl-0e38a5cd66444a14a`, status `ACTIVE`) and `terraform state list`. The tool's static check doesn't trace the module's separate `aws_flow_log` resource back to the VPC block it inspects.
+
+**Accepted as reasonable trade-offs for a portfolio project, with reasoning:**
+- **Public EKS API endpoint (`0.0.0.0/0`)** — kept open to allow both local `kubectl` access and GitHub Actions CI/CD without requiring a bastion host or VPN into the VPC. Security relies on IAM authentication and access entries rather than network isolation. A production environment handling real user data would restrict this to a private endpoint or specific CIDR ranges.
+- **Unrestricted node security group egress** — inherited from the standard `terraform-aws-modules/eks/aws` module defaults; nodes need broad outbound access to pull container images from ECR and reach AWS APIs.
+- **ECR repositories use AWS-managed encryption keys** rather than customer-managed KMS keys — acceptable for this non-regulated demo workload. A production system handling sensitive data would use customer-managed keys for finer-grained audit and rotation control

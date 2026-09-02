@@ -14,7 +14,9 @@ module "eks" {
   cluster_endpoint_public_access  = true
   cluster_endpoint_private_access = true
 
-  enable_cluster_creator_admin_permissions = true   # ← add this line
+  cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+
+  enable_cluster_creator_admin_permissions = true
 
   eks_managed_node_groups = {
     default = {
