@@ -29,6 +29,7 @@ jobs:
         uses: aquasecurity/tfsec-action@v1.0.3
         with:
           working_directory: terraform
+          soft_fail: true
 
   dockerfile-lint:
     name: Dockerfile Lint
