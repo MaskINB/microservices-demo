@@ -88,3 +88,19 @@ module "alb_controller_irsa" {
 output "alb_controller_role_arn" {
   value = module.alb_controller_irsa.role_arn
 }
+
+# GitHub OIDC for CI/CD to allow GitHub Actions to authenticate with AWS using OpenID Connect. This module sets up an IAM OIDC provider and a role that GitHub Actions can assume, enabling secure access to AWS resources from the CI/CD pipeline.
+
+module "github_oidc_cd" {
+  source = "./modules/github-oidc-cd"
+
+  tags = {
+    Project     = "eks-microservices-platform"
+    Environment = "portfolio"
+    ManagedBy   = "terraform"
+  }
+}
+
+output "github_cd_role_arn" {
+  value = module.github_oidc_cd.role_arn
+}
